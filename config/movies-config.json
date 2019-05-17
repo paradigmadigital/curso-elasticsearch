@@ -1,0 +1,245 @@
+{
+  "settings" : {
+    "number_of_shards" : 2,
+    "number_of_replicas" : 0,
+    "index": {
+      "analysis": {
+        "filter": {
+          "english_stop": {
+            "type": "stop", 
+            "stopwords":  "_english_"
+          },
+          "english_stemmer": {
+            "type": "stemmer", 
+            "language": "english"
+          },
+          "english_synonyms" : {
+            "type" : "synonym",
+            "synonyms" : ["schwarzenegger, schwarzeneger, chuache"]
+          }
+        },
+        "normalizer": {
+           "lowercase": { "type": "custom", "filter": ["lowercase"] }
+        },
+        "analyzer": {
+          "lowercase": {
+            "tokenizer":  "keyword", 
+            "filter": ["lowercase"]
+          },
+          "english": {
+            "tokenizer":  "standard", 
+            "filter": [
+              "lowercase", 
+              "english_stop", 
+              "english_stemmer"
+            ]
+          },
+          "english_with_synonyms": {
+            "tokenizer":  "standard", 
+            "filter": [
+              "lowercase", 
+              "english_stop", 
+              "english_synonyms", 
+              "english_stemmer"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "movie": {
+      "dynamic" : "false",
+      "properties": {
+
+        "title": {
+          "type": "text", 
+          "fields": {
+            "english": {
+              "type" : "text", 
+              "analyzer": "english", 
+              "search_analyzer": "english_with_synonyms"
+            },
+            "normalized": {
+              "type" : "keyword", 
+              "normalizer": "lowercase"
+            },
+            "raw": { "type" : "keyword" }
+          }
+        },
+
+        "year": {
+          "type": "integer", 
+          "fields": {
+            "text": {
+              "type" : "text"
+            }
+          }
+        },
+ 
+        "rated": {"type" : "keyword" },
+ 
+        "released": {"type": "date", "format": "yyyy-MM-dd'T'HH:mm:ssZ||yyyy-MM-dd", "locale": "en-US" },
+
+        "runtime": {"type" : "keyword" },
+
+        "genre": {
+          "type": "text", 
+          "fields": {
+            "english": {
+              "type" : "text", 
+              "analyzer": "english", 
+              "search_analyzer": "english_with_synonyms"
+            },
+            "normalized": {
+              "type" : "keyword", 
+              "normalizer": "lowercase"
+            },
+            "raw": { "type" : "keyword" }
+          }
+        },
+
+        "director": {
+          "type": "text", 
+          "fields": {
+            "english": {
+              "type" : "text", 
+              "analyzer": "english", 
+              "search_analyzer": "english_with_synonyms"
+            },
+            "normalized": {
+              "type" : "keyword", 
+              "normalizer": "lowercase"
+            },
+            "raw": { "type" : "keyword" }
+          }
+        },
+
+        "writers": {
+          "type": "text", 
+          "fields": {
+            "english": {
+              "type" : "text", 
+              "analyzer": "english", 
+              "search_analyzer": "english_with_synonyms"
+            },
+            "normalized": {
+              "type" : "keyword", 
+              "normalizer": "lowercase"
+            },
+            "raw": { "type" : "keyword" }
+          }
+        },
+
+        "actors": {
+          "type": "text", 
+          "fields": {
+            "english": {
+              "type" : "text", 
+              "analyzer": "english", 
+              "search_analyzer": "english_with_synonyms"
+            },
+            "normalized": {
+              "type" : "keyword", 
+              "normalizer": "lowercase"
+            },
+            "raw": { "type" : "keyword" }
+          }
+        },
+
+        "plot": {
+          "type": "text", 
+          "fielddata": true,
+          "fields": {
+            "english": {
+              "type" : "text", 
+              "analyzer": "english", 
+              "search_analyzer": "english_with_synonyms"
+            },
+            "normalized": {
+              "type" : "keyword", 
+              "normalizer": "lowercase"
+            },
+            "raw": { "type" : "keyword" }
+          }
+        },
+
+        "language": {
+          "type": "text", 
+          "fields": {
+            "english": {
+              "type" : "text", 
+              "analyzer": "english", 
+              "search_analyzer": "english_with_synonyms"
+            },
+            "normalized": {
+              "type" : "keyword", 
+              "normalizer": "lowercase"
+            },
+            "raw": { "type" : "keyword" }
+          }
+        },
+
+        "country": {
+          "type": "text", 
+          "fields": {
+            "english": {
+              "type" : "text", 
+              "analyzer": "english", 
+              "search_analyzer": "english_with_synonyms"
+            },
+            "normalized": {
+              "type" : "keyword", 
+              "normalizer": "lowercase"
+            },
+            "raw": { "type" : "keyword" }
+          }
+        },
+        "countryCode2": { "type" : "keyword" },
+        "countryCode3": { "type" : "keyword" },
+
+        "awards": {
+          "type": "text", 
+          "fields": {
+            "english": {
+              "type" : "text", 
+              "analyzer": "english", 
+              "search_analyzer": "english_with_synonyms"
+            },
+            "normalized": {
+              "type" : "keyword", 
+              "normalizer": "lowercase"
+            },
+            "raw": { "type" : "keyword" }
+          }
+        },
+
+        "poster": { "type" : "keyword" },
+
+        "metascore": {"type": "integer" },
+
+        "imdbRating" : {"type" : "float"},
+
+        "imdbVotes" : {"type" : "long"},
+
+        "imdbID": { "type" : "keyword" },
+
+        "type": {
+          "type": "text", 
+          "fields": {
+            "english": {
+              "type" : "text", 
+              "analyzer": "english", 
+              "search_analyzer": "english_with_synonyms"
+            },
+            "normalized": {
+              "type" : "keyword", 
+              "normalizer": "lowercase"
+            },
+            "raw": { "type" : "keyword" }
+          }
+        }
+      }
+    }
+  }
+}
